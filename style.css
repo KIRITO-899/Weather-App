@@ -1,0 +1,1258 @@
+ /* ===================================
+  CSS CUSTOM PROPERTIES & COLOR SCHEME
+  =================================== */
+ 
+ /* Light theme variables - default color scheme */
+ :root {
+ /* Basic colors for light theme */
+ --bg-color: #ffffff;
+ --text-color: #000000;
+ --card-bg: #f5f5f5;
+ --toggle-bg: #ffffff;
+   --toggle-circle: #000000;
+      
+   /* Gradient color schemes for modern visual appeal */
+ --primary-gradient: linear-gradient(135deg, #667eea 0%, #764ba2 100%);     /* Blue to purple */
+ --secondary-gradient: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);   /* Pink to red */
+ --success-gradient: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);     /* Light blue to cyan */
+ 
+ /* Shadow variables for glass morphism depth effects */
+ --card-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+ --card-hover-shadow: 0 30px 60px rgba(0, 0, 0, 0.15);
+ }
+
+ /* Dark theme variables - activated via body.dark class */
+ body.dark {
+      /* Inverted colors for dark theme */
+      --bg-color: #0a0a0a;
+      --text-color: #ffffff;
+      --card-bg: #1a1a1a;
+      --toggle-bg: #000000;
+      --toggle-circle: #ffffff;
+      
+      /* Darker, more muted gradients for dark theme */
+      --primary-gradient: linear-gradient(135deg, #2c3e50 0%, #4a6741 100%);     /* Dark blue to dark green */
+      --secondary-gradient: linear-gradient(135deg, #232526 0%, #414345 100%);   /* Dark grays */
+      --success-gradient: linear-gradient(135deg, #134e5e 0%, #71b280 100%);     /* Dark teal to muted green */
+      
+      /* Stronger shadows for dark theme depth */
+      --card-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+      --card-hover-shadow: 0 30px 60px rgba(0, 0, 0, 0.4);
+    }
+
+    /* ===================================
+       GLOBAL RESET & LAYOUT STRUCTURE
+       =================================== */
+    
+    /* Universal box-sizing for consistent layout calculations */
+    * {
+      box-sizing: border-box;
+    }
+
+    /* Main body layout - Flexbox container for centered vertical layout */
+    body {
+      margin: 0;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: var(--bg-color);           /* Fallback solid color */
+      background: var(--primary-gradient);   /* Primary gradient overlay */
+      color: var(--text-color);
+      transition: all 0.3s ease;             /* Smooth theme transitions */
+      
+      /* Flexbox layout for vertical centering */
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      
+      /* Layout spacing and constraints */
+      padding: 2rem;
+      overflow-x: hidden;                    /* Prevent horizontal scroll */
+      min-height: 100vh;                     /* Full viewport height */
+      position: relative;                    /* For absolute positioned children */
+    }
+
+    /* ===================================
+       GLASS MORPHISM EFFECTS & BACKDROP FILTERS
+       =================================== */
+    
+    /* Animated background overlay - Creates floating orb effects */
+    body::before {
+      content: '';
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      
+      /* Multi-layered radial gradients for depth and visual interest */
+      background: 
+        radial-gradient(circle at 20% 80%, rgba(120, 119, 198, 0.3) 0%, transparent 50%), /* Purple orb bottom-left */
+        radial-gradient(circle at 80% 20%, rgba(255, 119, 198, 0.3) 0%, transparent 50%), /* Pink orb top-right */
+        radial-gradient(circle at 40% 40%, rgba(120, 219, 255, 0.2) 0%, transparent 50%); /* Blue orb center */
+      
+      pointer-events: none;                  /* Allow clicks through overlay */
+      z-index: -1;                          /* Behind all content */
+      animation: float 20s ease-in-out infinite; /* Subtle floating animation */
+    }
+
+    /* Animation keyframes for floating background effects */
+    @keyframes float {
+      0%, 100% { opacity: 0.3; transform: scale(1) rotate(0deg); }
+      50% { opacity: 0.6; transform: scale(1.1) rotate(180deg); }
+    }
+
+    /* Prevent scrolling during theme transitions */
+    body.transitioning {
+      overflow: hidden;
+    }
+
+    /* ===================================
+       ANIMATION KEYFRAMES & TRANSITIONS
+       =================================== */
+    
+    /* Main heading with animated gradient text effect */
+    h1 {
+      margin-bottom: 2rem;
+      font-size: 3rem;
+      font-weight: 700;
+      
+      /* Animated gradient text effect */
+      background: linear-gradient(135deg, #667eea, #764ba2, #f093fb);
+      background-size: 200% 200%;           /* Oversized for animation movement */
+      -webkit-background-clip: text;        /* Clip background to text shape */
+      background-clip: text;
+      -webkit-text-fill-color: transparent; /* Make text transparent to show background */
+      animation: gradientShift 4s ease infinite; /* Continuous gradient animation */
+      
+      text-align: center;
+      text-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+    }
+
+    /* Gradient shifting animation for text */
+    @keyframes gradientShift {
+      0%, 100% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+    }
+
+    /* ===================================
+       COMPONENT-SPECIFIC STYLING SECTIONS
+       =================================== */
+    
+    /* Input group container - Glass morphism design */
+    .input-group {
+      display: flex;
+      gap: 0.8rem;
+      margin-bottom: 2rem;
+      
+      /* Glass morphism styling */
+      background: rgba(255, 255, 255, 0.15);    /* Semi-transparent background */
+      backdrop-filter: blur(20px);              /* Glass blur effect */
+      border: 1px solid rgba(255, 255, 255, 0.2); /* Subtle border */
+      border-radius: 20px;
+      padding: 0.8rem;
+      
+      /* Depth effects */
+      box-shadow: var(--card-shadow);
+      transition: all 0.3s ease;                /* Smooth hover transitions */
+    }
+
+    /* Hover effect for input group */
+    .input-group:hover {
+      transform: translateY(-5px);              /* Lift effect on hover */
+      box-shadow: var(--card-hover-shadow);     /* Enhanced shadow on hover */
+    }
+
+    input {
+      padding: 1rem 1.5rem;
+      border-radius: 15px;
+      border: none;
+      font-size: 1.1rem;
+      font-weight: 500;
+      background: rgba(255, 255, 255, 0.9);
+      color: #333;
+      flex: 1;
+      min-width: 250px;
+      outline: none;
+      transition: all 0.3s ease;
+      box-shadow: inset 0 2px 10px rgba(0, 0, 0, 0.05);
+    }
+
+    input:focus {
+      background: rgba(255, 255, 255, 1);
+      box-shadow: 0 0 20px rgba(102, 126, 234, 0.3);
+      transform: scale(1.02);
+    }
+
+    input::placeholder {
+      color: #888;
+      font-weight: 400;
+    }
+
+    button {
+      cursor: pointer;
+      border: none;
+      transition: all 0.3s ease;
+      font-weight: 600;
+      position: relative;
+      overflow: hidden;
+    }
+
+    button::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+      transition: left 0.5s;
+    }
+
+    button:hover::before {
+      left: 100%;
+    }
+
+    #searchButton {
+      padding: 1rem 1.5rem;
+      border-radius: 15px;
+      background: var(--success-gradient);
+      color: white;
+      font-size: 1rem;
+      box-shadow: 0 8px 25px rgba(79, 172, 254, 0.3);
+    }
+
+    #searchButton:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 15px 35px rgba(79, 172, 254, 0.4);
+    }
+
+    #speechButton {
+      padding: 1rem 1.5rem;
+      border-radius: 15px;
+      background: var(--secondary-gradient);
+      color: white;
+      font-size: 1rem;
+      box-shadow: 0 8px 25px rgba(240, 147, 251, 0.3);
+    }
+
+    #speechButton:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 15px 35px rgba(240, 147, 251, 0.4);
+    }
+
+    #speechButton.listening {
+      animation: pulse-recording 1.5s infinite, glow 2s ease-in-out infinite alternate;
+    }
+
+    @keyframes pulse-recording {
+      0% { transform: scale(1); }
+      50% { transform: scale(1.1); }
+      100% { transform: scale(1); }
+    }
+
+    @keyframes glow {
+      from { box-shadow: 0 0 20px rgba(245, 85, 108, 0.5); }
+      to { box-shadow: 0 0 30px rgba(245, 85, 108, 0.8); }
+    }
+
+    #locationButton {
+      padding: 1rem;
+      width: 50px;
+      height: 50px;
+      border-radius: 15px;
+      background: var(--primary-gradient);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 8px 25px rgba(102, 126, 234, 0.3);
+    }
+
+    #locationButton:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 15px 35px rgba(102, 126, 234, 0.4);
+    }
+
+    #locationButton img {
+      width: 24px;
+      height: 24px;
+      filter: brightness(0) invert(1);
+    }
+
+    /* ===================================
+       RESPONSIVE DESIGN BREAKPOINTS
+       =================================== */
+    
+    /* Tablet breakpoint - Mobile optimization techniques */
+    @media (max-width: 768px) {
+      /* Typography scaling for smaller screens */
+      h1 {
+        font-size: 2.5rem;
+        margin-bottom: 1.5rem;
+      }
+
+      /* Input group responsive adjustments */
+      .input-group {
+        gap: 0.5rem;
+        padding: 0.6rem;
+        flex-wrap: wrap;                       /* Allow wrapping on smaller screens */
+        justify-content: center;
+      }
+
+      /* Input field mobile optimization */
+      input {
+        min-width: 200px;                      /* Maintain minimum touch target size */
+        padding: 0.8rem 1.2rem;
+        font-size: 1rem;
+      }
+
+      /* Button mobile sizing */
+      button {
+        padding: 0.8rem 1.2rem;
+        font-size: 0.9rem;
+      }
+
+      /* Location button mobile adjustments */
+      #locationButton {
+        width: 45px;
+        height: 45px;
+        padding: 0.8rem;
+      }
+
+      #locationButton img {
+        width: 20px;
+        height: 20px;
+      }
+
+      /* Icon sizing for touch interfaces */
+      #searchButton svg, #speechButton svg {
+        width: 18px;
+        height: 18px;
+      }
+
+      /* Weather cards mobile layout - horizontal scrolling */
+      .weather-cards {
+        flex-direction: row;
+        justify-content: center;
+        gap: 1rem;
+        flex-wrap: nowrap;                     /* Prevent wrapping for horizontal scroll */
+      }
+
+      /* Weather info card mobile sizing */
+      .weather-info-card {
+        width: 180px;
+        padding: 1rem;
+        font-size: 0.85rem;
+      }
+
+      /* Temperature card mobile adjustments */
+      .weather-temp-card {
+        width: 140px;
+        height: 120px;
+        padding: 0.8rem;
+      }
+
+      .weather-content {
+        width: 80px;
+        height: 80px;
+      }
+
+      .temp-value {
+        font-size: 1.8rem;
+      }
+
+      /* Weather icon mobile sizing */
+      .weather-icon img {
+        width: 40px;
+        height: 40px;
+      }
+
+      /* Digital clock mobile adjustments */
+      .digital-clock {
+        margin-top: 0.8rem;
+        padding: 0.8rem 1rem;
+      }
+
+      #clockTime {
+        font-size: 1.4rem;
+      }
+
+      #clockDate {
+        font-size: 0.8rem;
+      }
+
+      #clockLocation {
+        font-size: 0.7rem;
+      }
+
+      /* Detail pills mobile optimization */
+      .detail-pill {
+        padding: 0.6rem 0.8rem;
+        font-size: 0.75rem;
+        margin-right: 0.3rem;
+      }
+
+      /* Weather condition text mobile sizing */
+      .weather-condition {
+        font-size: 1.2rem;
+        margin-bottom: 1rem;
+      }
+
+      /* Humidity bar mobile adjustments */
+      .humidity-bar-container {
+        gap: 0.3rem;
+      }
+
+      .humidity-text {
+        font-size: 0.75rem;
+      }
+    }
+
+    /* Small mobile breakpoint - Advanced mobile optimization */
+    @media (max-width: 480px) {
+      /* Reduced padding for very small screens */
+      body {
+        padding: 0.8rem;
+      }
+
+      /* Further reduced typography for small screens */
+      h1 {
+        font-size: 2rem;
+        margin-bottom: 1.5rem;
+      }
+
+      /* Full width input group on small screens */
+      .input-group {
+        width: 100%;
+        padding: 0.6rem;
+      }
+
+      /* Minimum input sizing for very small screens */
+      input {
+        min-width: 120px;                      /* Smaller minimum width for compact screens */
+        font-size: 0.9rem;
+      }
+
+      /* Tighter spacing for weather cards */
+      .weather-cards {
+        gap: 0.8rem;
+      }
+
+      /* Compact weather info card sizing */
+      .weather-info-card {
+        width: 160px;
+        padding: 0.8rem;
+        font-size: 0.8rem;
+      }
+
+      /* Smaller temperature card for mobile */
+      .weather-temp-card {
+        width: 120px;
+        height: 100px;
+        padding: 0.6rem;
+      }
+
+      .weather-content {
+        width: 70px;
+        height: 70px;
+      }
+
+      /* Smaller temperature text for mobile */
+      .temp-value {
+        font-size: 1.5rem;
+      }
+
+      /* Compact weather icons */
+      .weather-icon img {
+        width: 35px;
+        height: 35px;
+      }
+
+      /* Digital clock small screen adjustments */
+      .digital-clock {
+        margin-top: 0.6rem;
+        padding: 0.6rem 0.8rem;
+      }
+
+      #clockTime {
+        font-size: 1.2rem;
+      }
+
+      #clockDate {
+        font-size: 0.75rem;
+      }
+
+      #clockLocation {
+        font-size: 0.65rem;
+      }
+
+      /* Condensed detail pills for mobile */
+      .detail-pill {
+        padding: 0.5rem 0.6rem;
+        font-size: 0.7rem;
+        margin-right: 0.2rem;
+      }
+
+      /* Smaller weather condition text */
+      .weather-condition {
+        font-size: 1rem;
+        margin-bottom: 0.8rem;
+      }
+
+      /* Smaller humidity text */
+      .humidity-text {
+        font-size: 0.7rem;
+      }
+    }
+
+    #weatherInfo {
+      margin-top: 2rem;
+      padding: 0;
+      background: none;
+      box-shadow: none;
+      max-width: none;
+      min-width: none;
+      opacity: 1;
+      transform: translateY(0);
+      transition: all 0.5s ease;
+    }
+
+    #weatherInfo.weather-hidden {
+      opacity: 0;
+      transform: translateY(20px);
+      pointer-events: none;
+    }
+
+    .weather-cards {
+      display: flex;
+      gap: 2rem;
+      flex-wrap: wrap;
+      justify-content: center;
+      align-items: flex-start;
+      position: relative;
+    }
+
+    .weather-card-container {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 1.5rem;
+    }
+
+    .weather-info-card {
+      background: rgba(255, 255, 255, 0.15);
+      backdrop-filter: blur(20px);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      border-radius: 30px;
+      padding: 2rem;
+      width: 380px;
+      box-shadow: var(--card-shadow);
+      transition: all 0.3s ease;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .weather-info-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 3px;
+      background: var(--success-gradient);
+      border-radius: 30px 30px 0 0;
+    }
+
+    .weather-info-card:hover {
+      transform: translateY(-10px);
+      box-shadow: var(--card-hover-shadow);
+    }
+
+    .weather-temp-card {
+      background: rgba(255, 255, 255, 0.15);
+      backdrop-filter: blur(20px);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      border-radius: 50px;
+      padding: 1.5rem;
+      width: 200px;
+      height: 160px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      box-shadow: var(--card-shadow);
+      transition: all 0.3s ease;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .weather-temp-card::before {
+      content: '';
+      position: absolute;
+      top: -50%;
+      left: -50%;
+      width: 200%;
+      height: 200%;
+      background: conic-gradient(from 0deg, var(--success-gradient), var(--secondary-gradient), var(--primary-gradient), var(--success-gradient));
+      animation: rotateBorder 15s linear infinite;
+      z-index: -1;
+    }
+
+    .weather-temp-card::after {
+      content: '';
+      position: absolute;
+      top: 3px;
+      left: 3px;
+      right: 3px;
+      bottom: 3px;
+      background: rgba(255, 255, 255, 0.15);
+      backdrop-filter: blur(20px);
+      border-radius: 47px;
+      z-index: -1;
+    }
+
+    @keyframes rotateBorder {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+
+    .weather-temp-card:hover {
+      transform: scale(1.05);
+      box-shadow: var(--card-hover-shadow);
+    }
+
+    .weather-temp-card:hover::before {
+      animation-play-state: paused;
+    }
+
+    .weather-content {
+      position: relative;
+      z-index: 2;
+      width: 120px;
+      height: 120px;
+      border-radius: 50%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      animation: rotateContent 25s linear infinite;
+    }
+
+    .weather-temp-card:hover .weather-content {
+      animation-play-state: paused;
+    }
+
+    @keyframes rotateContent {
+      from { transform: rotate(0deg); }
+      to { transform: rotate(360deg); }
+    }
+
+    body.dark .weather-info-card,
+    body.dark .weather-temp-card {
+      background: rgba(10, 10, 10, 0.4);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    body.dark .weather-temp-card::after {
+      background: rgba(10, 10, 10, 0.4);
+    }
+
+    .weather-condition {
+      font-size: 1.6rem;
+      font-weight: 700;
+      color: var(--text-color);
+      margin-bottom: 2rem;
+      text-transform: capitalize;
+      text-align: center;
+      background: var(--success-gradient);
+      -webkit-background-clip: text;
+      background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .weather-details-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 1.5rem;
+      gap: 1rem;
+    }
+
+    .detail-pill {
+      background: var(--success-gradient);
+      color: white;
+      padding: 1rem 1.5rem;
+      border-radius: 25px;
+      display: flex;
+      align-items: center;
+      gap: 0.8rem;
+      font-weight: 600;
+      font-size: 0.95rem;
+      flex: 1;
+      margin-right: 0.5rem;
+      box-shadow: 0 8px 25px rgba(79, 172, 254, 0.2);
+      transition: all 0.3s ease;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .detail-pill:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 12px 30px rgba(79, 172, 254, 0.3);
+    }
+
+    .detail-pill.feels-like {
+      background: var(--secondary-gradient);
+      box-shadow: 0 8px 25px rgba(240, 147, 251, 0.2);
+    }
+
+    .detail-pill.feels-like:hover {
+      box-shadow: 0 12px 30px rgba(240, 147, 251, 0.3);
+    }
+
+    .detail-pill.location {
+      background: var(--primary-gradient);
+      box-shadow: 0 8px 25px rgba(102, 126, 234, 0.2);
+    }
+
+    .detail-pill.location:hover {
+      box-shadow: 0 12px 30px rgba(102, 126, 234, 0.3);
+    }
+
+    .humidity-bar-container {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+    }
+
+    .humidity-text {
+      font-size: 0.95rem;
+      font-weight: 600;
+    }
+
+    .humidity-bar {
+      width: 100%;
+      height: 10px;
+      background: rgba(255, 255, 255, 0.3);
+      border-radius: 5px;
+      overflow: hidden;
+      position: relative;
+    }
+
+    .humidity-fill {
+      height: 100%;
+      background: linear-gradient(90deg, #4CAF50, #2196F3, #9C27B0);
+      border-radius: 5px;
+      transition: width 0.8s ease;
+      position: relative;
+    }
+
+    .humidity-fill::after {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.4), transparent);
+      animation: shimmer 2s infinite;
+    }
+
+    @keyframes shimmer {
+      0% { transform: translateX(-100%); }
+      100% { transform: translateX(100%); }
+    }
+
+    .detail-pill-icon {
+      font-size: 1.8rem;
+      background: rgba(255, 255, 255, 0.2);
+      border-radius: 50%;
+      width: 50px;
+      height: 50px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      backdrop-filter: blur(10px);
+      transition: all 0.3s ease;
+    }
+
+    .detail-pill-icon:hover {
+      transform: scale(1.1) rotate(10deg);
+      background: rgba(255, 255, 255, 0.3);
+    }
+
+    .temp-display {
+      display: flex;
+      align-items: baseline;
+      gap: 0.3rem;
+      margin-bottom: 0.5rem;
+      justify-content: center;
+    }
+
+    .temp-value {
+      font-size: 3rem;
+      font-weight: 800;
+      color: var(--text-color);
+      background: var(--success-gradient);
+      -webkit-background-clip: text;
+      background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .temp-unit {
+      font-size: 1.3rem;
+      font-weight: 500;
+      color: var(--text-color);
+      opacity: 0.8;
+    }
+
+    .weather-icon {
+      transition: all 0.3s ease;
+    }
+
+    .weather-icon:hover {
+      transform: scale(1.1);
+    }
+
+    .weather-icon img {
+      width: 50px;
+      height: 50px;
+      filter: drop-shadow(0 5px 15px rgba(0, 0, 0, 0.2));
+    }
+
+    /* ===================================
+       DIGITAL CLOCK STYLING
+       =================================== */
+    
+    .digital-clock {
+      margin-top: 1rem;
+      background: rgba(255, 255, 255, 0.15);
+      backdrop-filter: blur(20px);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      border-radius: 20px;
+      padding: 1rem 1.5rem;
+      text-align: center;
+      box-shadow: var(--card-shadow);
+      transition: all 0.3s ease;
+    }
+
+    .digital-clock:hover {
+      transform: translateY(-2px);
+      box-shadow: var(--card-hover-shadow);
+    }
+
+    body.dark .digital-clock {
+      background: rgba(10, 10, 10, 0.4);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    #clockTime {
+      display: block;
+      font-size: 1.8rem;
+      font-weight: 700;
+      color: var(--text-color);
+      background: var(--success-gradient);
+      -webkit-background-clip: text;
+      background-clip: text;
+      -webkit-text-fill-color: transparent;
+      margin-bottom: 0.3rem;
+      font-family: 'Courier New', monospace;
+    }
+
+    #clockDate {
+      display: block;
+      font-size: 0.9rem;
+      font-weight: 500;
+      color: var(--text-color);
+      opacity: 0.8;
+      margin-bottom: 0.2rem;
+    }
+
+    #clockLocation {
+      display: block;
+      font-size: 0.75rem;
+      font-weight: 400;
+      color: var(--text-color);
+      opacity: 0.6;
+      font-style: italic;
+    }
+
+    /* ===================================
+       THEME SWITCHING FUNCTIONALITY
+       =================================== */
+    
+    /* Main theme toggle button with glass morphism */
+    .theme-toggle {
+      position: fixed;
+      top: 30px;
+      right: 30px;
+      width: 40px;
+      height: 40px;
+      border: 0;
+      
+      /* Glass morphism styling for theme toggle */
+      background: rgba(255, 255, 255, 0.15);
+      backdrop-filter: blur(20px);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      border-radius: 50%;
+      
+      cursor: pointer;
+      z-index: 999;
+      padding: 0;
+      will-change: transform;                   /* Optimize for animations */
+      transition: all 0.3s ease;
+      box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+    }
+
+    /* Theme toggle hover effects */
+    .theme-toggle:hover {
+      transform: scale(1.1);
+      box-shadow: 0 12px 30px rgba(0, 0, 0, 0.15);
+    }
+
+    /* Expanding state for theme transition animation */
+    .theme-toggle.expanding {
+      position: fixed;
+      top: 0;
+      left: 0;
+      z-index: 9999;                           /* Highest z-index during animation */
+    }
+
+    /* Remove default focus outline */
+    .theme-toggle:focus {
+      outline: none;
+    }
+
+    /* Pulsing animation state */
+    .theme-toggle.pulsing {
+      animation: pulse 0.75s cubic-bezier(0.4, 0, 0, 1);
+    }
+
+    /* Pulse animation elements */
+    .pulse {
+      position: absolute;
+      border-radius: 50%;
+      left: 0;
+      top: 0;
+      will-change: transform;
+    }
+
+    /* Front pulse element - main toggle visual */
+    .pulse--front {
+      width: 100%;
+      height: 100%;
+      background: var(--toggle-circle);
+      z-index: 1;
+      transition: background 0.3s;
+    }
+
+    /* Expanding animation for theme transition */
+    .expanding .pulse--front {
+      animation: balloonBurst 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+      animation-fill-mode: forwards;
+    }
+
+    /* Light theme burst animation */
+    .expanding.light-burst .pulse--front {
+      background: #ffffff !important;
+    }
+
+    /* Dark theme burst animation */
+    .expanding.dark-burst .pulse--front {
+      background: #0a0a0a !important;
+    }
+
+    /* Back pulse element - ring effect */
+    .pulse--back {
+      height: 200%;
+      width: 200%;
+      left: -50%;
+      top: -50%;
+      transform: scale(0.47619);
+      border: 2px solid var(--success-gradient);
+      background: rgba(79, 172, 254, 0.3);
+    }
+
+    /* Pulsing ring animation */
+    .theme-toggle.pulsing .pulse--back {
+      animation: pulseRing 1s cubic-bezier(0.4, 0, 0, 1);
+      animation-delay: 0.28s;
+    }
+
+    /* Pulse animation keyframes */
+    @keyframes pulse {
+      0% { transform: scale(1); }
+      50% { transform: scale(0.8); }
+      100% { transform: scale(1); }
+    }
+
+    /* Pulse ring expansion animation */
+    @keyframes pulseRing {
+      0% { 
+        transform: scale(0.47619);
+        opacity: 1;
+      }
+      100% { 
+        transform: scale(1.2);
+        opacity: 0;
+      }
+    }
+
+    /* Balloon burst animation for theme transition */
+    @keyframes balloonBurst {
+      0% {
+        transform: scale(1);
+        opacity: 1;
+      }
+      30% {
+        transform: scale(25);
+        opacity: 1;
+      }
+      60% {
+        transform: scale(100);
+        opacity: 1;
+      }
+      100% {
+        transform: scale(150);
+        opacity: 0;
+      }
+    }
+
+    .recent-searches {
+      display: flex;
+      gap: 0.8rem;
+      flex-wrap: wrap;
+      margin-top: 1.5rem;
+      max-width: 500px;
+      justify-content: center;
+      padding: 1.5rem;
+      background: rgba(255, 255, 255, 0.15);
+      backdrop-filter: blur(20px);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      border-radius: 30px;
+      box-shadow: var(--card-shadow);
+      transition: all 0.3s ease;
+    }
+
+    .recent-searches:hover {
+      transform: translateY(-5px);
+      box-shadow: var(--card-hover-shadow);
+    }
+
+    body.dark .recent-searches {
+      background: rgba(10, 10, 10, 0.4);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    .recent-searches button {
+      padding: 0.8rem 1.5rem;
+      border-radius: 25px;
+      border: none;
+      background: var(--primary-gradient);
+      color: white;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      font-weight: 600;
+      font-size: 0.9rem;
+      backdrop-filter: blur(10px);
+      box-shadow: 0 5px 15px rgba(102, 126, 234, 0.2);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .recent-searches button:hover {
+      transform: translateY(-3px) scale(1.05);
+      box-shadow: 0 10px 25px rgba(102, 126, 234, 0.3);
+    }
+
+    .recent-searches button:active {
+      transform: translateY(-1px) scale(1.02);
+    }
+
+    /* Additional smooth scroll behavior */
+    html {
+      scroll-behavior: smooth;
+    }
+
+    /* Enhanced focus states for accessibility */
+    button:focus,
+    input:focus {
+      outline: 2px solid rgba(102, 126, 234, 0.5);
+      outline-offset: 2px;
+    }
+
+    /* Loading animation for buttons */
+    .loading {
+      position: relative;
+      pointer-events: none;
+    }
+
+    .loading::after {
+      content: '';
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      width: 20px;
+      height: 20px;
+      margin: -10px 0 0 -10px;
+      border: 2px solid transparent;
+      border-top: 2px solid currentColor;
+      border-radius: 50%;
+      animation: spin 1s linear infinite;
+    }
+
+    @keyframes spin {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+
+    /* Temperature Unit Toggle Button */
+    .unit-toggle {
+      background: var(--secondary-gradient);
+      color: white;
+      border: none;
+      padding: 1rem 2rem;
+      border-radius: 25px;
+      font-size: 1rem;
+      font-weight: 600;
+      cursor: pointer;
+      box-shadow: 0 8px 25px rgba(240, 147, 251, 0.3);
+      transition: all 0.3s ease;
+      position: relative;
+      overflow: hidden;
+      backdrop-filter: blur(20px);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      margin-top: 1rem;
+      opacity: 0;
+      transform: translateY(20px);
+    }
+
+    .unit-toggle.show {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .unit-toggle:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 15px 35px rgba(240, 147, 251, 0.4);
+    }
+
+    .unit-toggle:active {
+      transform: translateY(-1px);
+    }
+
+    .unit-toggle::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+      transition: left 0.5s;
+    }
+
+    .unit-toggle:hover::before {
+      left: 100%;
+    }
+
+    /* ===================================
+       MOBILE OPTIMIZATION TECHNIQUES
+       =================================== */
+    
+    /* Mobile responsive adjustments for unit toggle */
+    @media (max-width: 768px) {
+      .unit-toggle {
+        padding: 0.8rem 1.5rem;              /* Smaller padding for mobile */
+        font-size: 0.9rem;                   /* Reduced font size */
+        margin-top: 0.8rem;                  /* Adjusted spacing */
+      }
+    }
+
+    /* ===================================
+       ACCESSIBILITY & PERFORMANCE OPTIMIZATIONS
+       =================================== */
+    
+    /* Additional smooth scroll behavior for better UX */
+    html {
+      scroll-behavior: smooth;
+    }
+
+    /* Enhanced focus states for accessibility compliance */
+    button:focus,
+    input:focus {
+      outline: 2px solid rgba(102, 126, 234, 0.5);
+      outline-offset: 2px;
+    }
+
+    /* Loading animation states for interactive feedback */
+    .loading {
+      position: relative;
+      pointer-events: none;                   /* Disable interaction during loading */
+    }
+
+    /* Loading spinner animation */
+    .loading::after {
+      content: '';
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      width: 20px;
+      height: 20px;
+      margin: -10px 0 0 -10px;
+      border: 2px solid transparent;
+      border-top: 2px solid currentColor;
+      border-radius: 50%;
+      animation: spin 1s linear infinite;
+    }
+
+    /* Spinner rotation animation */
+    @keyframes spin {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+
+    /*
+    ========================================
+    DESIGN SYSTEM SUMMARY
+    ========================================
+    
+    This CSS file implements a modern glass morphism weather app with:
+    
+    1. CSS CUSTOM PROPERTIES: 
+       - Centralized color management with light/dark theme variables
+       - Consistent gradient schemes and shadow definitions
+    
+    2. LAYOUT STRUCTURE:
+       - Flexbox-based responsive layout system
+       - Vertical centering with adaptive spacing
+    
+    3. GLASS MORPHISM EFFECTS:
+       - Semi-transparent backgrounds with backdrop-filter blur
+       - Layered radial gradients for atmospheric effects
+       - Subtle borders and shadow depth
+    
+    4. ANIMATION SYSTEM:
+       - Smooth transitions for all interactive elements  
+       - Keyframe animations for text gradients, floating effects, and theme switching
+       - Performance-optimized with will-change properties
+    
+    5. RESPONSIVE DESIGN:
+       - Mobile-first approach with tablet (768px) and small mobile (480px) breakpoints
+       - Touch-friendly sizing and spacing adjustments
+       - Horizontal scrolling layouts for small screens
+    
+    6. THEME SWITCHING:
+       - Dynamic color scheme switching with smooth transitions
+       - Animated theme toggle with burst effects
+       - Dark mode optimizations for improved readability
+    
+    7. COMPONENT ARCHITECTURE:
+       - Modular styling for input groups, weather cards, and controls
+       - Consistent hover and focus states throughout
+       - Glass morphism applied consistently across components
+    
+    8. MOBILE OPTIMIZATION:
+       - Progressive enhancement for touch interfaces
+       - Reduced spacing and typography scaling
+       - Optimized interaction targets and visual hierarchy
+    */

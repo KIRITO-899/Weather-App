@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <!-- Basic Meta Tags -->
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Weather App</title>
+  
+  <!-- Favicon -->
+  <link rel="icon" type="image/x-icon" href="favicon-1.ico" />
+  
+  <!-- Custom Stylesheet -->
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <!-- Main App Title -->
+  <h1>Weather App</h1>
+
+  <!-- Search Input Group with Multiple Input Methods -->
+  <div class="input-group">
+    <!-- Text Input for City Names -->
+    <input type="text" id="searchInput" placeholder="Enter city " />
+    
+    <!-- Search Button with Magnifying Glass Icon -->
+    <button id="searchButton">
+      <svg fill="none" height="20" viewBox="0 0 45 45" width="20" xmlns="http://www.w3.org/2000/svg">
+        <path id="searchIconDark" class="accentColor" clip-rule="evenodd" d="M5.00087 20.0137C5.00087 18.0425 5.38915 16.0906 6.14353 14.2695C6.89791 12.4484 8.00363 10.7936 9.39755 9.39981C10.7915 8.00598 12.4463 6.90034 14.2675 6.146C16.0888 5.39167 18.0408 5.00342 20.0121 5.00342C21.9834 5.00342 23.9354 5.39167 25.7566 6.146C27.5779 6.90034 29.2327 8.00598 30.6266 9.39981C32.0205 10.7936 33.1262 12.4484 33.8806 14.2695C34.635 16.0906 35.0233 18.0425 35.0233 20.0137C35.0233 23.9946 33.4417 27.8125 30.6266 30.6275C27.8114 33.4425 23.9933 35.0239 20.0121 35.0239C16.0309 35.0239 12.2127 33.4425 9.39755 30.6275C6.5824 27.8125 5.00087 23.9946 5.00087 20.0137ZM20.0121 1.23625e-07C16.8268 0.000456127 13.6877 0.761065 10.8556 2.21861C8.02347 3.67616 5.58012 5.78855 3.72863 8.38023C1.87714 10.9719 0.670974 13.968 0.210373 17.1196C-0.250229 20.2711 0.0480379 23.4871 1.08039 26.5002C2.11273 29.5133 3.84934 32.2365 6.14589 34.4435C8.44244 36.6505 11.2326 38.2776 14.2845 39.1895C17.3364 40.1014 20.5618 40.2718 23.6928 39.6865C26.8238 39.1013 29.7699 37.7772 32.2862 35.8245L40.7601 44.2977C41.2319 44.7534 41.8639 45.0056 42.5199 44.9999C43.1758 44.9942 43.8033 44.7311 44.2672 44.2673C44.7311 43.8034 44.9942 43.176 44.9999 42.52C45.0056 41.8641 44.7534 41.2322 44.2977 40.7603L35.8239 32.287C38.1208 29.3287 39.5415 25.7852 39.9244 22.0595C40.3073 18.3338 39.637 14.5754 37.9897 11.2118C36.3424 7.84812 33.7843 5.01415 30.6062 3.03213C27.4281 1.05011 23.7576 -0.000416085 20.0121 1.23625e-07ZM20.0121 30.0205C22.6662 30.0205 25.2117 28.9662 27.0884 27.0896C28.9652 25.2129 30.0195 22.6676 30.0195 20.0137C30.0195 17.3597 28.9652 14.8144 27.0884 12.9378C25.2117 11.0611 22.6662 10.0068 20.0121 10.0068C17.3579 10.0068 14.8125 11.0611 12.9357 12.9378C11.059 14.8144 10.0046 17.3597 10.0046 20.0137C10.0046 22.6676 11.059 25.2129 12.9357 27.0896C14.8125 28.9662 17.3579 30.0205 20.0121 30.0205Z" fill-rule="evenodd" style="fill: white;"></path>
+      </svg>
+    </button>
+    
+    <!-- Voice Search Button with Microphone Icon -->
+    <button id="speechButton" title="Voice Search">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M12 14C13.66 14 15 12.66 15 11V5C15 3.34 13.66 2 12 2C10.34 2 9 3.34 9 5V11C9 12.66 10.34 14 12 14Z" fill="white"/>
+        <path d="M17 11C17 14.53 14.39 17.44 11 17.93V21H13C13.55 21 14 21.45 14 22C14 22.55 13.55 23 13 23H11C10.45 23 10 22.55 10 22C10 21.45 10.45 21 11 21H11V17.93C7.61 17.44 5 14.53 5 11H7C7 13.76 9.24 16 12 16C14.76 16 17 13.76 17 11H17Z" fill="white"/>
+      </svg>
+    </button>
+    
+    <!-- Location Button for Geolocation -->
+    <button id="locationButton"><img src="images/location.png" alt="Get Current Location"></button>
+  </div>
+
+  <!-- Recent Searches Container (Populated by JavaScript) -->
+  <div class="recent-searches" id="recentSearches"></div>
+
+  <!-- Weather Information Display Section (Hidden by default) -->
+  <div id="weatherInfo" class="weather-hidden">
+    <div class="weather-cards">
+      
+      <!-- Main Weather Information Card -->
+      <div class="weather-info-card">
+        <!-- Weather Condition Title -->
+        <div class="weather-condition" id="weatherCondition">Clear</div>
+        
+        <!-- First Row: Humidity Information -->
+        <div class="weather-details-row">
+          <div class="detail-pill humidity">
+            <span class="detail-icon"><img src="images/humidity.png" alt="humidity" style="width: 16px; height: 16px;"></span>
+            <div class="humidity-bar-container">
+              <!-- Humidity Text Display -->
+              <span class="humidity-text" id="humidityText">Humidity 0%</span>
+              <!-- Animated Humidity Bar -->
+              <div class="humidity-bar">
+                <div class="humidity-fill" id="humidityFill" style="width: 0%"></div>
+              </div>
+            </div>
+          </div>
+          <!-- Decorative Water Drop Icon -->
+          <div class="detail-pill-icon">💧</div>
+        </div>
+        
+        <!-- Second Row: Temperature and Location Information -->
+        <div class="weather-details-row">
+          <!-- Feels Like Temperature Pill -->
+          <div class="detail-pill feels-like">
+            <span class="detail-icon">
+              <!-- Thermometer SVG Icon -->
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M8 10.255V5C8 3.93913 8.42143 2.92172 9.17157 2.17157C9.92172 1.42143 10.9391 1 12 1C13.0609 1 14.0783 1.42143 14.8284 2.17157C15.5786 2.92172 16 3.93913 16 5V10.255C17.223 11.1066 18.1423 12.3262 18.6241 13.7365C19.1059 15.1467 19.125 16.6739 18.6788 18.0958C18.2325 19.5176 17.3441 20.76 16.1429 21.642C14.9416 22.524 13.4903 22.9996 12 22.9996C10.5097 22.9996 9.05837 22.524 7.85714 21.642C6.6559 20.76 5.7675 19.5176 5.32123 18.0958C4.87496 16.6739 4.89412 15.1467 5.37592 13.7365C5.85772 12.3262 6.77702 11.1066 8 10.255ZM8 16C8 17.0609 8.42143 18.0783 9.17157 18.8284C9.92172 19.5786 10.9391 20 12 20C13.0609 20 14.0783 19.5786 14.8284 18.8284C15.5786 18.0783 16 17.0609 16 16H8Z" fill="currentColor"/>
+              </svg>
+            </span>
+            <!-- Feels Like Temperature Display -->
+            <span id="feelsLikeTemp">Feels 0°C</span>
+          </div>
+          
+          <!-- Location Name Pill -->
+          <div class="detail-pill location">
+            <span class="detail-icon"><img src="images/location.png" alt="location" style="width: 16px; height: 16px;"></span>
+            <!-- Current Location Name -->
+            <span id="locationName">Location</span>
+          </div>
+        </div>
+      </div>
+      
+      <!-- Rotating Temperature Display Card -->
+      <div class="weather-card-container">
+        <div class="weather-temp-card">
+          <!-- Rotating Content Container -->
+          <div class="weather-content">
+            <!-- Main Temperature Display -->
+            <div class="temp-display">
+              <span class="temp-value" id="tempValue">0</span>
+              <span class="temp-unit" id="tempUnit">°C</span>
+            </div>
+            <!-- Weather Icon Display -->
+            <div class="weather-icon">
+              <img id="weatherIcon" src="images/01d.png" alt="weather icon">
+            </div>
+          </div>
+        </div>
+        
+        <!-- Digital Clock -->
+        <div class="digital-clock">
+          <span id="clockTime">00:00:00</span>
+          <span id="clockDate">Loading...</span>
+          <span id="clockLocation">Local Time</span>
+        </div>
+      </div>
+      
+    </div>
+  </div>
+
+  <!-- Temperature Unit Toggle Button (C/F) -->
+  <button type="button" id="toggleUnitButton" class="unit-toggle" title="Toggle Temperature Unit">
+    Switch to °F
+  </button>
+
+  <!-- Dark/Light Theme Toggle Button -->
+  <button type="button" id="themeToggle" class="theme-toggle" title="Toggle Theme">
+    <!-- Animated Pulse Elements for Theme Transition -->
+    <div class="pulse pulse--front"></div>
+    <div class="pulse pulse--back"></div>
+  </button>
+
+  <!-- JavaScript File -->
+  <script src="script.js"></script>
+</body>
+</html>
